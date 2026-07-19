@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Vinita Chaudhary</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@400;500;600;700&family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F8EFEC;
+    --paper:#FFFFFF;
+    --red:#A3384A;
+    --red-dark:#752433;
+    --ink:#2B1D1F;
+    --pink:#E9C9C3;
+    --line:rgba(43,29,31,.14);
+  }
+  body.blog-theme{
+    --cream:#F4F1E6;
+    --red:#3C6E5E;
+    --red-dark:#264A3E;
+    --ink:#20241F;
+    --pink:#F0C766;
+    --line:rgba(32,36,31,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Poppins',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--pink);}
+  a{color:inherit;text-decoration:none; -webkit-tap-highlight-color:rgba(183,49,44,.25);}
+  img{max-width:100%;display:block;}
+
+  .display{ font-family:'Baloo 2',cursive; font-weight:800; letter-spacing:-0.01em; }
+  .hand{ font-family:'Caveat',cursive; }
+  .groovy{ font-family:'Bagel Fat One',cursive; font-weight:400; -webkit-text-stroke:0; letter-spacing:-0.01em; }
+
+  .mark{ position:relative; display:inline-block; color:var(--paper); background:var(--red); padding:0 8px; border-radius:6px; transform:rotate(-1deg); }
+  .block.red .mark, .block.ink .mark{ background:var(--paper); color:var(--red-dark); }
+
+  .photo-frame{
+    border:4px solid var(--ink);
+    border-radius:18px;
+    overflow:hidden;
+    transform:rotate(-2deg);
+    box-shadow:10px 10px 0 -2px var(--ink);
+    transition:transform .3s ease, box-shadow .3s ease;
+    max-width:230px;
+  }
+  .photo-frame.tilt-r{ transform:rotate(2deg); }
+  .photo-frame:hover, .photo-frame:active{ transform:rotate(0deg) translateY(-4px); box-shadow:14px 14px 0 -2px var(--red); }
+  .photo-frame img{ width:100%; display:block; }
+  .photo-caption{ font-family:'Baloo 2',cursive; font-weight:600; font-size:13.5px; margin-top:12px; opacity:.75; }
+
+  .star{display:inline-block;position:relative;color:var(--red);}
+
+  header.site-nav{
+    background:var(--paper);
+    border-bottom:3px solid var(--ink);
+    padding:18px 6vw;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+    position:sticky; top:0; z-index:50;
+  }
+  header.site-nav .brand{
+    font-family:'Bagel Fat One',cursive;
+    font-weight:400;
+    font-size:22px;
+    color:var(--red);
+    display:flex; align-items:center; gap:6px;
+  }
+  header.site-nav .brand svg{ animation:wiggle 3.2s ease-in-out infinite; position:static; }
+  header.site-nav nav{display:flex; gap:22px; flex-wrap:wrap;}
+  header.site-nav nav a{
+    font-weight:600;
+    font-size:14.5px;
+    padding:6px 4px;
+    border-bottom:3px solid transparent;
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+    display:inline-block;
+  }
+  header.site-nav nav a:hover, header.site-nav nav a.active, header.site-nav nav a:active{
+    border-color:var(--red);
+    color:var(--red-dark);
+    transform:translateY(-2px);
+  }
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 6vw;}
+
+  .block{padding:76px 0; position:relative; overflow:hidden;}
+  .block.red{background:var(--red); color:var(--paper);}
+  .block.ink{background:var(--ink); color:var(--paper);}
+  .block-inner{max-width:1080px; margin:0 auto; padding:0 6vw; position:relative;}
+
+  .eyebrow{
+    font-family:'Baloo 2',cursive;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:14px;
+    display:inline-block;
+  }
+  .block.red .eyebrow, .block.ink .eyebrow{color:var(--pink);}
+
+  .id-wordmark{
+    font-size:clamp(34px,6vw,54px);
+    color:var(--ink);
+    display:inline-flex; align-items:baseline; gap:14px;
+  }
+  .id-year{ font-family:'Poppins',sans-serif; font-weight:500; font-size:16px; color:var(--red); }
+  .id-card{
+    position:relative;
+    max-width:640px;
+    margin:28px auto 0;
+    background:var(--cream);
+    border:3px solid var(--ink);
+    border-radius:28px;
+    padding:30px;
+    text-align:left;
+    box-shadow:10px 10px 0 -3px var(--red);
+  }
+  .id-sparkle{ position:absolute; top:-18px; right:-14px; animation:bob 3.4s ease-in-out infinite; }
+  .id-card-inner{ display:flex; gap:22px; align-items:flex-start; flex-wrap:wrap; }
+  .id-photo{
+    width:110px; height:110px; border-radius:20px; overflow:hidden;
+    border:3px solid var(--ink); flex:0 0 auto; background:var(--pink);
+  }
+  .id-photo img{ width:100%; height:100%; object-fit:cover; }
+  .id-info{ flex:1; min-width:220px; }
+  .id-info h3{ font-family:'Fraunces',serif; font-weight:600; font-size:24px; }
+  .id-role{ font-family:'Baloo 2',cursive; font-weight:600; font-size:14px; color:var(--red-dark); margin-top:2px; }
+  .id-tagline{ font-size:14px; margin-top:14px; color:#4a3638; max-width:420px; }
+  .id-footer{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+    gap:14px; margin-top:20px; padding-top:16px; border-top:1.5px dashed var(--line);
+  }
+  .id-contact{ font-size:12.5px; color:#5a4547; }
+  @media (max-width:560px){ .id-footer{ flex-direction:column; align-items:flex-start; } }
+
+  h1.hero-title{
+    font-size:clamp(52px,10vw,110px);
+    line-height:0.92;
+    color:var(--red);
+    font-weight:800;
+    -webkit-text-stroke:1px var(--red);
+  }
+  h1.hero-title .line2{ display:inline-block; transform:rotate(-2deg); font-weight:800; }
+  h2.page-title{
+    font-size:clamp(38px,6.5vw,64px);
+    line-height:1.05;
+    margin-bottom:18px;
+    font-family:'Bagel Fat One',cursive;
+    font-weight:400;
+    letter-spacing:-0.01em;
+  }
+  .block.red h2.page-title, .block.ink h2.page-title{color:var(--paper);}
+
+  p.lead{font-size:17px; max-width:620px; color:#3a342c;}
+  .block.red p.lead, .block.ink p.lead{color:var(--pink);}
+
+  .btn{
+    position:relative;
+    display:inline-block;
+    font-family:'Baloo 2',cursive;
+    font-weight:700;
+    background:var(--ink);
+    color:var(--paper);
+    padding:12px 26px;
+    border-radius:40px;
+    border:3px solid var(--ink);
+    margin-top:22px;
+    margin-right:10px;
+    transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
+    overflow:hidden;
+  }
+  .btn:hover{transform:translateY(-3px) rotate(-1deg); background:var(--red); border-color:var(--red); box-shadow:0 10px 0 -4px rgba(33,28,22,.18);}
+  .btn:active{transform:translateY(-1px) scale(.97) rotate(1deg);}
+  .btn.outline{ background:transparent; color:var(--ink); }
+  .block.red .btn.outline, .block.ink .btn.outline{color:var(--paper); border-color:var(--paper);}
+
+  .grid{display:grid; gap:24px;}
+  .grid-2{grid-template-columns:1fr 1fr;}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:760px){
+    .grid-2, .grid-3{grid-template-columns:1fr;}
+  }
+
+  .card{
+    background:var(--paper);
+    border:3px solid var(--ink);
+    border-radius:22px;
+    padding:28px;
+    position:relative;
+    transition:transform .28s cubic-bezier(.2,.8,.3,1), box-shadow .28s ease;
+  }
+  .card:hover, .card:active{
+    transform:translateY(-6px) rotate(-1deg);
+    box-shadow:8px 10px 0 -2px var(--ink);
+  }
+  .card .num{
+    font-family:'Baloo 2',cursive;
+    font-weight:800;
+    font-size:46px;
+    color:var(--pink);
+    position:absolute;
+    top:14px; right:20px;
+    line-height:1;
+  }
+  .card-tag{
+    display:inline-block;
+    font-family:'Baloo 2',cursive;
+    font-weight:600;
+    font-size:11.5px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    background:var(--cream);
+    border:1.5px solid var(--ink);
+    color:var(--ink);
+    padding:3px 10px;
+    border-radius:20px;
+    margin-bottom:10px;
+  }
+  .card h3{
+    font-family:'Baloo 2',cursive;
+    font-weight:700;
+    font-size:21px;
+    margin-bottom:10px;
+    max-width:80%;
+  }
+  .card p, .card ul{font-size:14.5px; color:#3a342c;}
+  .card ul{margin-top:10px; margin-left:18px;}
+  .card li{margin-bottom:6px;}
+
+  .tag-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;}
+  .tag{
+    font-family:'Baloo 2',cursive;
+    font-weight:600;
+    font-size:13.5px;
+    background:var(--paper);
+    border:2.5px solid var(--ink);
+    color:var(--ink);
+    padding:7px 16px;
+    border-radius:30px;
+    transition:transform .18s cubic-bezier(.3,1.5,.5,1), background .18s ease, color .18s ease;
+  }
+  .tag:hover, .tag:active{transform:translateY(-3px) rotate(-3deg) scale(1.05); background:var(--red); color:var(--paper); border-color:var(--red);}
+  .block.red .tag, .block.ink .tag{background:transparent; border-color:var(--paper); color:var(--paper);}
+  .block.red .tag:hover, .block.red .tag:active, .block.ink .tag:hover, .block.ink .tag:active{background:var(--paper); color:var(--red);}
+
+  .avatar-wrap{
+    width:min(320px, 70vw);
+    aspect-ratio:1/1;
+    border-radius:50%;
+    overflow:hidden;
+    border:5px solid var(--ink);
+    background:var(--pink);
+    position:relative;
+    transition:transform .3s ease;
+  }
+  .avatar-wrap:hover, .avatar-wrap:active{ transform:rotate(-3deg) scale(1.02); }
+  .avatar-wrap img{width:100%; height:100%; object-fit:cover;}
+  .avatar-holder{ position:relative; display:inline-block; }
+
+  .hero-flex{display:flex; align-items:center; gap:48px; flex-wrap:wrap; position:relative;}
+  .hero-flex > div{flex:1; min-width:280px; position:relative;}
+
+  .timeline{border-left:4px solid var(--ink); margin-left:12px; padding-left:32px;}
+  .timeline .item{position:relative; padding-bottom:40px;}
+  .timeline .item:last-child{padding-bottom:0;}
+  .timeline .item::before{
+    content:"";
+    position:absolute; left:-40px; top:4px;
+    width:16px; height:16px; border-radius:50%;
+    background:var(--red); border:3px solid var(--ink);
+  }
+  .timeline .item .meta{ font-family:'Baloo 2',cursive; font-weight:700; color:var(--red); font-size:14px; }
+  .timeline .item h3{font-size:19px; margin:6px 0 4px;}
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .contact-form{ max-width:520px; margin-top:28px; display:flex; flex-direction:column; gap:20px; }
+  .contact-form .field{ position:relative; }
+  .contact-form input, .contact-form textarea{
+    width:100%;
+    background:rgba(251,248,241,.06);
+    border:2px solid rgba(251,248,241,.28);
+    border-radius:16px;
+    color:var(--paper);
+    font-family:'Poppins',sans-serif;
+    font-size:15.5px;
+    padding:22px 16px 10px;
+    outline:none;
+    resize:none;
+    transition:border-color .25s ease, background .25s ease, transform .2s ease;
+  }
+  .contact-form textarea{ min-height:96px; }
+  .contact-form input:focus, .contact-form textarea:focus{
+    border-color:var(--red);
+    background:rgba(251,248,241,.11);
+    transform:translateY(-2px);
+  }
+  .contact-form label{
+    position:absolute; left:16px; top:16px;
+    color:rgba(251,248,241,.55);
+    font-size:14.5px;
+    pointer-events:none;
+    transition:transform .2s ease, font-size .2s ease, color .2s ease;
+  }
+  .contact-form input:focus ~ label,
+  .contact-form input:not(:placeholder-shown) ~ label,
+  .contact-form textarea:focus ~ label,
+  .contact-form textarea:not(:placeholder-shown) ~ label{
+    transform:translateY(-8px);
+    font-size:11px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--pink);
+  }
+  .contact-form .btn{ align-self:flex-start; }
+
+  .contact-hero{ padding-bottom:36px; }
+  .contact-hero .hero-title{ transform:rotate(-1deg); display:inline-block; }
+  .wave-char{ animation:bob 3.4s ease-in-out infinite; }
+  .wave-arm{ transform-origin:196px 96px; animation:wave 1.6s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
+  @keyframes wave{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(-16deg); } }
+  @media (prefers-reduced-motion: reduce){ .wave-char, .wave-arm{ animation:none; } }
+  .contact-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media (max-width:760px){ .contact-layout{ grid-template-columns:1fr; } }
+  .quote-card{
+    background:rgba(240,201,194,.08);
+    border:2px solid rgba(251,248,241,.25);
+    border-radius:20px;
+    padding:32px;
+    transform:rotate(-1deg);
+  }
+
+  .footer-cta{ margin-bottom:38px; }
+  .footer-cta-title{
+    font-size:clamp(28px,5vw,44px);
+    color:var(--paper);
+    line-height:1.15;
+    margin-bottom:22px;
+  }
+  .footer-btn.btn{
+    background:var(--red);
+    border-color:var(--red);
+    font-size:16px;
+    padding:14px 32px;
+  }
+  .footer-btn.btn:hover, .footer-btn.btn:active{ background:var(--paper); color:var(--red-dark); border-color:var(--paper); }
+
+  footer.site-footer{
+    background:var(--ink);
+    color:var(--paper);
+    padding:52px 6vw;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .contact-row{
+    display:flex; justify-content:center; gap:22px; flex-wrap:wrap;
+    margin-top:16px; font-family:'Baloo 2',cursive; font-weight:600; font-size:14px;
+  }
+  .contact-row a{border-bottom:2px solid var(--red); transition:transform .2s ease;}
+  .contact-row a:hover, .contact-row a:active{ display:inline-block; transform:translateY(-2px) rotate(-2deg); }
+  footer.site-footer p.small{margin-top:22px; font-size:12.5px; opacity:.6;}
+
+  @keyframes riseIn{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);}}
+  .rise{animation:riseIn .7s cubic-bezier(.2,.7,.3,1) both;}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
+});
+</script>
+
+</head>
+<body class="blog-theme">
+<header class="site-nav">
+  <div class="brand"> VINITA</div>
+  <nav>
+    <a href="index.html" class="">Home</a>
+<a href="services.html" class="">Services</a>
+<a href="skills.html" class="">Skills</a>
+<a href="projects.html" class="">Projects</a>
+<a href="certificates.html" class="">Certificates</a>
+<a href="education.html" class="">Education</a>
+<a href="activities.html" class="">Activities</a>
+<a href="blog.html" class="active">Blog</a>
+<a href="contact.html" class="">Contact</a>
+
+  </nav>
+</header>
+
+<section class="block reveal">
+  <div class="block-inner rise" style="max-width:760px;">
+    <span class="eyebrow">* Blog &middot; Content &amp; AI Marketing</span>
+    <h1 class="page-title display" style="font-size:clamp(32px,5.5vw,48px);">What Does a <span class="mark">Content &amp; AI Marketing Analyst</span> Actually Do?</h1>
+    <p style="font-family:'Baloo 2',cursive; font-weight:600; font-size:13.5px; color:var(--red-dark); margin-top:10px;">By Vinita Chaudhary &middot; 2 min read</p>
+  </div>
+</section>
+
+<section class="block reveal">
+  <div class="block-inner" style="max-width:760px;">
+    <p class="lead" style="font-size:18px;">Ask five people what a "Content &amp; AI Marketing Analyst" does, and you'll get five different answers. Here's mine, from the inside.</p>
+
+    <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:24px; margin-top:34px; margin-bottom:10px; color:var(--red-dark);">Where Research Meets Writing</h2>
+    <p class="lead">The job starts before the writing does. I study search intent, competitor content, and keyword gaps &mdash; because a well-written paragraph aimed at the wrong question doesn't help anyone. Good content marketing is 40% writing and 60% figuring out what's actually worth writing about.</p>
+
+    <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:24px; margin-top:34px; margin-bottom:10px; color:var(--red-dark);">Why AI Search Changes the Brief</h2>
+    <p class="lead">Google isn't the only reader anymore. Tools like ChatGPT and Gemini summarize, cite, and sometimes skip content entirely &mdash; which means SEO today means writing content structured clearly enough for both a human skimmer and an AI model deciding what to quote. That's the "AI Marketing" half of the title, and it's the part most people are still catching up on.</p>
+
+    <div class="quote-card" style="margin:28px 0; transform:rotate(0deg);">
+      <p class="hand" style="font-size:24px; color:var(--red-dark);">"Content that doesn't get read is just typing."</p>
+    </div>
+
+    <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:24px; margin-top:8px; margin-bottom:10px; color:var(--red-dark);">What This Looks Like in Practice</h2>
+    <p class="lead">On BuzzBasket, this meant writing product copy that answered the actual question a shopper had &mdash; is this cheaper here? &mdash; instead of generic marketing language. On this portfolio, it meant structuring every page around one clear idea instead of cramming in everything at once.</p>
+
+    <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:24px; margin-top:34px; margin-bottom:10px; color:var(--red-dark);">Why I Do This Work</h2>
+    <p class="lead">Because I'd rather write less and have it actually work &mdash; for the reader, and for the algorithm reading over their shoulder.</p>
+
+    <div class="tag-row" style="margin-top:32px;">
+      <span class="tag">Content Marketing</span><span class="tag">AI Search</span><span class="tag">SEO Strategy</span>
+      <span class="tag">Keyword Research</span><span class="tag">Content Strategy</span>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer">
+  <div class="footer-cta">
+    <h2 class="display footer-cta-title">Got something in mind?<br>Let's make it happen.</h2>
+    <a href="contact.html" class="btn footer-btn">Say Hello &rarr;</a>
+  </div>
+  <div class="contact-row">
+    <a href="mailto:vinita.chaudhary_bca24@gla.ac.in">vinita.chaudhary_bca24@gla.ac.in</a>
+    <a href="https://www.linkedin.com/in/vinita-chaudhary31" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/itsmevinita" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <p class="small">Vinita Chaudhary &middot; Mathura, Uttar Pradesh &middot; BCA (Computer Science), GLA University</p>
+</footer>
+
+</body>
+</html>
